@@ -7,9 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { getStudents, rechargeStudent, getComplaints, getOrders, type Student, type Complaint, type Order } from '@/lib/storage';
-import { LogOut, Users, CreditCard, MessageSquare, TrendingUp, AlertCircle } from 'lucide-react';
+import { LogOut, Users, CreditCard, MessageSquare, TrendingUp, AlertCircle, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
-import mecLogo from '@/assets/mec-logo.png';
+import mecLogo from '@/assets/mec-logo-official.png';
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -76,6 +76,13 @@ const Admin = () => {
       <nav className="bg-card shadow-card border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => navigate('/login')}
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
             <img src={mecLogo} alt="MEC Logo" className="w-10 h-10" />
             <h1 className="text-2xl font-bold text-foreground">Admin Panel</h1>
           </div>

@@ -10,7 +10,7 @@ import { Cart } from '@/components/Cart';
 import { LogOut, Star, Gift, Clock, Wallet } from 'lucide-react';
 import { addToCart, getCurrentUser, setCurrentUser, getStudents } from '@/lib/storage';
 import { toast } from 'sonner';
-import mecLogo from '@/assets/mec-logo.png';
+import mecLogo from '@/assets/mec-logo-official.png';
 
 const Student = () => {
   const navigate = useNavigate();

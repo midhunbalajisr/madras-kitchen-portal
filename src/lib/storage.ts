@@ -209,13 +209,19 @@ export const generateToken = (): string => {
   return Math.floor(10000 + Math.random() * 90000).toString();
 };
 
+// Generate random student ID
+export const generateStudentId = (): string => {
+  const randomNum = Math.floor(1000 + Math.random() * 9000);
+  return `MEC${randomNum}`;
+};
+
 // Initialize demo data if needed
 export const initializeDemoData = (): void => {
   const students = getStudents();
   if (students.length === 0) {
     const demoStudents: Student[] = [
       {
-        id: 'MEC001',
+        id: 'MEC1001',
         name: 'Rahul Kumar',
         email: 'rahul@mec.edu',
         balance: 500,
@@ -223,7 +229,7 @@ export const initializeDemoData = (): void => {
         orders: [],
       },
       {
-        id: 'MEC002',
+        id: 'MEC1002',
         name: 'Priya Sharma',
         email: 'priya@mec.edu',
         balance: 750,
@@ -231,11 +237,83 @@ export const initializeDemoData = (): void => {
         orders: [],
       },
       {
-        id: 'MEC003',
+        id: 'MEC1003',
         name: 'Arjun Patel',
         email: 'arjun@mec.edu',
         balance: 300,
         points: 30,
+        orders: [],
+      },
+      {
+        id: 'MEC1004',
+        name: 'Sneha Reddy',
+        email: 'sneha@mec.edu',
+        balance: 600,
+        points: 60,
+        orders: [],
+      },
+      {
+        id: 'MEC1005',
+        name: 'Vikram Singh',
+        email: 'vikram@mec.edu',
+        balance: 450,
+        points: 40,
+        orders: [],
+      },
+      {
+        id: 'MEC1006',
+        name: 'Anjali Menon',
+        email: 'anjali@mec.edu',
+        balance: 800,
+        points: 90,
+        orders: [],
+      },
+      {
+        id: 'MEC1007',
+        name: 'Karthik Raj',
+        email: 'karthik@mec.edu',
+        balance: 550,
+        points: 55,
+        orders: [],
+      },
+      {
+        id: 'MEC1008',
+        name: 'Deepika Iyer',
+        email: 'deepika@mec.edu',
+        balance: 700,
+        points: 75,
+        orders: [],
+      },
+      {
+        id: 'MEC1009',
+        name: 'Aditya Gupta',
+        email: 'aditya@mec.edu',
+        balance: 400,
+        points: 35,
+        orders: [],
+      },
+      {
+        id: 'MEC1010',
+        name: 'Pooja Nair',
+        email: 'pooja@mec.edu',
+        balance: 650,
+        points: 65,
+        orders: [],
+      },
+      {
+        id: 'MEC1011',
+        name: 'Rohan Desai',
+        email: 'rohan@mec.edu',
+        balance: 520,
+        points: 52,
+        orders: [],
+      },
+      {
+        id: 'MEC1012',
+        name: 'Divya Krishna',
+        email: 'divya@mec.edu',
+        balance: 580,
+        points: 58,
         orders: [],
       },
     ];

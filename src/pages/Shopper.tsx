@@ -5,9 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { getOrders, updateOrderStatus, type Order } from '@/lib/storage';
-import { LogOut, Package, Truck, CreditCard, CheckCircle } from 'lucide-react';
+import { LogOut, Package, Truck, CreditCard, CheckCircle, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
-import mecLogo from '@/assets/mec-logo.png';
+import mecLogo from '@/assets/mec-logo-official.png';
 
 const Shopper = () => {
   const navigate = useNavigate();
@@ -122,8 +122,15 @@ const Shopper = () => {
       <nav className="bg-card shadow-card border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => navigate('/login')}
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
             <img src={mecLogo} alt="MEC Logo" className="w-10 h-10" />
-            <h1 className="text-2xl font-bold text-foreground">Shopper Panel</h1>
+            <h1 className="text-2xl font-bold text-foreground">Canteener Panel</h1>
           </div>
           <Button 
             variant="ghost" 

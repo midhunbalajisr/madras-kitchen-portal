@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { saveComplaint, getCurrentUser, type Complaint } from '@/lib/storage';
-import { ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, AlertCircle, CheckCircle, Phone } from 'lucide-react';
 import { toast } from 'sonner';
 
 const ComplaintPage = () => {
@@ -83,9 +83,9 @@ const ComplaintPage = () => {
                 />
               </div>
 
-              <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+              <div className="bg-muted/50 p-4 rounded-lg space-y-3">
                 <p className="text-sm font-semibold mb-2">Canteen Rush Status</p>
-                <div className="flex gap-4">
+                <div className="flex gap-4 mb-3">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     <span className="text-sm">Free</span>
@@ -98,6 +98,15 @@ const ComplaintPage = () => {
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                     <span className="text-sm">Rush</span>
                   </div>
+                </div>
+                <div className="border-t pt-3">
+                  <a 
+                    href="tel:7002080020"
+                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-semibold"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span>Call Support: 7002080020</span>
+                  </a>
                 </div>
               </div>
 
