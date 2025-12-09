@@ -10,6 +10,7 @@ import { getCart, clearCart, saveOrder, getCurrentUser, generateToken, type Orde
 import { CreditCard, Smartphone, QrCode, CheckCircle, ArrowLeft, Shield, Zap, Gift, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import mecLogo from '@/assets/mec-logo-official.png';
+import { supabase } from '@/integrations/supabase/client';
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -53,11 +54,65 @@ const Payment = () => {
 
     setProcessing(true);
 
-    // Simulate Cashfree payment processing
-    setTimeout(() => {
+    try {
+      // For card payment, process locally
+      if (paymentMethod === 'card') {
+        const token = generateToken();
+        const order: Order = {
+          id: `MK${Date.now()}`,
+          studentId: currentUser.id,
+          items: cart,
+          total: grandTotal,
+          paymentMethod,
+          status: 'pending',
+          token,
+          timestamp: Date.now(),
+        };
+
+        saveOrder(order);
+        currentUser.balance -= grandTotal;
+        currentUser.points += Math.floor(grandTotal / 10);
+        clearCart();
+        
+        toast.success('Payment successful!', {
+          description: `Order token: ${token}`,
+        });
+        navigate('/order-success', { state: { token, order } });
+        return;
+      }
+
+      // For UPI payments, use Cashfree API
+      const orderId = `MK_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      const { data, error } = await supabase.functions.invoke('cashfree-payment', {
+        body: {
+          action: 'create_order',
+          orderData: {
+            orderId,
+            amount: grandTotal,
+            customerId: currentUser.id,
+            customerName: currentUser.name,
+            customerPhone: '9999999999',
+            returnUrl: `${window.location.origin}/order-success`,
+            orderNote: `Madras Kitchen - ${cart.length} items`,
+          },
+        },
+      });
+
+      if (error) {
+        throw new Error(error.message || 'Payment failed');
+      }
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to create payment order');
+      }
+
+      console.log('Cashfree order created:', data);
+
+      // For demo, simulate successful payment after order creation
       const token = generateToken();
       const order: Order = {
-        id: `CF${Date.now()}`,
+        id: data.orderId || orderId,
         studentId: currentUser.id,
         items: cart,
         total: grandTotal,
@@ -65,24 +120,35 @@ const Payment = () => {
         status: 'pending',
         token,
         timestamp: Date.now(),
+        cashfreeOrderId: data.cfOrderId,
       };
 
       saveOrder(order);
-      
-      if (paymentMethod === 'card') {
-        currentUser.balance -= grandTotal;
-      }
       currentUser.points += Math.floor(grandTotal / 10);
-      
       clearCart();
-      setProcessing(false);
 
-      toast.success('Payment successful!', {
-        description: `Order token: ${token}`,
+      toast.success('Order created successfully!', {
+        description: `Order ID: ${data.orderId}. Payment session ready.`,
       });
 
-      navigate('/order-success', { state: { token, order } });
-    }, 2500);
+      navigate('/order-success', { 
+        state: { 
+          token, 
+          order,
+          paymentSessionId: data.paymentSessionId,
+          cashfreeOrderId: data.cfOrderId,
+        } 
+      });
+
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Payment failed';
+      console.error('Payment error:', errorMessage);
+      toast.error('Payment failed', {
+        description: errorMessage,
+      });
+    } finally {
+      setProcessing(false);
+    }
   };
 
   if (cart.length === 0) {
@@ -125,7 +191,7 @@ const Payment = () => {
           </div>
           <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/30">
             <Shield className="w-3 h-3 mr-1" />
-            Secured
+            Cashfree
           </Badge>
         </div>
       </header>
@@ -140,7 +206,7 @@ const Payment = () => {
                   <Zap className="w-5 h-5 text-primary" />
                   Payment Method
                 </CardTitle>
-                <CardDescription>Choose your preferred payment option</CardDescription>
+                <CardDescription>Powered by Cashfree Payment Gateway</CardDescription>
               </CardHeader>
               <CardContent className="p-6">
                 <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-4">
@@ -202,7 +268,7 @@ const Payment = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-amber-500" />
-                <span>Instant Confirmation</span>
+                <span>Cashfree Secure</span>
               </div>
               <div className="flex items-center gap-2">
                 <Gift className="w-4 h-4 text-primary" />
@@ -267,7 +333,7 @@ const Payment = () => {
                   {processing ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                      Processing...
+                      Processing via Cashfree...
                     </>
                   ) : (
                     <>
@@ -278,7 +344,7 @@ const Payment = () => {
                 </Button>
 
                 <p className="text-xs text-center text-muted-foreground">
-                  By paying, you agree to our terms of service
+                  Secured by Cashfree Payment Gateway
                 </p>
               </CardContent>
             </Card>
