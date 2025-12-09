@@ -18,6 +18,7 @@ export interface Order {
   status: 'pending' | 'preparing' | 'ready' | 'delivered';
   token: string;
   timestamp: number;
+  cashfreeOrderId?: string;
 }
 
 export interface CartItem {
