@@ -14,8 +14,8 @@ serve(async (req) => {
   try {
     const { action, orderData, orderId } = await req.json();
     
-    const appId = Deno.env.get('CASHFREE_APP_ID');
-    const secretKey = Deno.env.get('CASHFREE_SECRET_KEY');
+    const appId = Deno.env.get('CASHFREE_APP_ID=1148827fed953f04e7dfac249f37288411');
+    const secretKey = Deno.env.get('CASHFREE_SECRET_KEY=cfsk_ma_prod_2335c9165dde63a616539be4a9071e1b_4ff59a5a');
     
     if (!appId || !secretKey) {
       console.error('Missing Cashfree credentials');
