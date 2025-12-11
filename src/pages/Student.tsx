@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { menuItems, categories, getDayOffer, type MenuItem } from '@/data/menuData';
 import { FoodCard } from '@/components/FoodCard';
 import { Cart } from '@/components/Cart';
-import { LogOut, Star, Gift, Clock, Wallet, Sparkles, ArrowLeft, MessageSquare, AlertTriangle } from 'lucide-react';
+import { LogOut, Star, Gift, Clock, Wallet, Sparkles, ArrowLeft, MessageSquare, AlertTriangle, User } from 'lucide-react';
 import { getCurrentUser, setCurrentUser as saveCurrentUser, getStudents } from '@/lib/storage';
 import { dispatchCartUpdate } from '@/hooks/useCart';
 import { addToCart as addToCartStorage } from '@/lib/storage';
@@ -59,18 +59,18 @@ const Student = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-secondary/5 pb-24">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-cyan-50 to-emerald-50 pb-24">
       {/* Sticky Header */}
-      <nav className="bg-background/80 backdrop-blur-xl shadow-card border-b border-border sticky top-0 z-40">
+      <nav className="bg-white/80 backdrop-blur-xl shadow-card border-b border-teal-100 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" onClick={() => navigate('/login')} className="hover:bg-primary/10">
+              <Button variant="ghost" size="icon" onClick={() => navigate('/login')} className="hover:bg-teal-100">
                 <ArrowLeft className="w-4 h-4" />
               </Button>
               <img src={mecLogo} alt="MEC Logo" className="w-10 h-10 rounded-full shadow-lg" />
               <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <h1 className="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
                   Madras Kitchen
                 </h1>
                 <p className="text-xs text-muted-foreground flex items-center gap-1">
@@ -84,7 +84,7 @@ const Student = () => {
                 <div className="text-right hidden sm:block">
                   <p className="font-semibold text-sm">{currentUser.name}</p>
                   <div className="flex items-center gap-2 text-xs">
-                    <Badge variant="outline" className="bg-primary/10 border-primary/30">
+                    <Badge variant="outline" className="bg-teal-500/10 border-teal-500/30 text-teal-700">
                       <Wallet className="w-3 h-3 mr-1" />
                       ₹{currentUser.balance}
                     </Badge>
@@ -95,6 +95,15 @@ const Student = () => {
                   </div>
                 </div>
               )}
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="hover:bg-teal-100 text-teal-700"
+                onClick={() => navigate('/profile')}
+                title="My Profile"
+              >
+                <User className="w-4 h-4" />
+              </Button>
               <Button 
                 variant="ghost" 
                 size="icon"
@@ -114,7 +123,7 @@ const Student = () => {
       <div className="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
         {/* Today's Offer Banner */}
         {todayOffer && (
-          <Card className="bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground border-0 shadow-hover overflow-hidden relative">
+          <Card className="bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500 text-white border-0 shadow-hover overflow-hidden relative">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9nPjwvc3ZnPg==')] opacity-30" />
             <CardContent className="p-6 relative">
               <div className="flex items-center justify-between flex-wrap gap-4">
@@ -130,7 +139,7 @@ const Student = () => {
                     <p className="text-white/90">{todayOffer.description}</p>
                   </div>
                 </div>
-                <Badge className="bg-white text-primary hover:bg-white text-xl px-6 py-3 font-bold shadow-lg">
+                <Badge className="bg-white text-teal-600 hover:bg-white text-xl px-6 py-3 font-bold shadow-lg">
                   {todayOffer.discount}
                 </Badge>
               </div>
@@ -140,7 +149,7 @@ const Student = () => {
 
         {/* Quick Actions */}
         <div className="flex flex-wrap gap-3">
-          <Card className="flex-1 min-w-[200px] border-0 shadow-card bg-gradient-to-br from-amber-500/10 to-orange-500/10">
+          <Card className="flex-1 min-w-[200px] border-0 shadow-card bg-gradient-to-br from-amber-100 to-orange-100">
             <CardContent className="p-4 flex items-center gap-3">
               <Star className="w-6 h-6 text-amber-500 fill-amber-500" />
               <div>
@@ -151,7 +160,7 @@ const Student = () => {
           </Card>
           <Button 
             variant="outline" 
-            className="border-2 hover:bg-primary/10"
+            className="border-2 border-teal-200 text-teal-700 hover:bg-teal-50"
             onClick={() => navigate('/feedback')}
           >
             <MessageSquare className="w-4 h-4 mr-2" />
@@ -159,7 +168,7 @@ const Student = () => {
           </Button>
           <Button 
             variant="outline" 
-            className="border-2 hover:bg-destructive/10 hover:text-destructive hover:border-destructive"
+            className="border-2 border-rose-200 text-rose-600 hover:bg-rose-50"
             onClick={() => navigate('/complaint')}
           >
             <AlertTriangle className="w-4 h-4 mr-2" />
@@ -174,7 +183,7 @@ const Student = () => {
               <TabsTrigger 
                 key={cat.id} 
                 value={cat.id} 
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white px-4 py-2 rounded-full border-2 data-[state=inactive]:border-border data-[state=active]:border-transparent transition-all"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white px-4 py-2 rounded-full border-2 data-[state=inactive]:border-teal-200 data-[state=active]:border-transparent transition-all"
               >
                 <span className="mr-1">{cat.icon}</span>
                 {cat.name}
